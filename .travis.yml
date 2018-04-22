@@ -1,0 +1,25 @@
+language: ruby
+rvm:
+- 2.2
+- 1.9.3
+services:
+- docker
+script:
+  - >
+    wget -O- bit.ly/ansibletest | env
+    ANSIBLE_VERSIONS="1.4.4 1.5.4 1.9.2 2.1.0.0"
+    DOCKER_IMAGES="centos:6 centos:7 debian:7 fedora:20 fedora:24 fedora:25
+    ubuntu:12.04 ubuntu:16.04"
+    sh -x
+
+after_failure:
+- cat role-tester-ansible-master/.kitchen.yml
+- cat role-tester-ansible-master/.kitchen.local.yml
+- cat role-tester-ansible-master/.kitchen/logs/*.log | grep -v '^I, '
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack:
+    secure: Ik1yq73B4KNEJixrNRv45/W/HuFOlGkInlom7ffWR0tV64LItJ+ZsNxauCn2NylzP8ggwfjGYKEez5b8foLSZmLAAZUyKNDZl0024SVqwMTqbFo9vI35mhyUExhIhBvCY/qSTmIri+jWNPcALCApbP3hnuTfwLuBuIxXQMxj0x/TTwyr43odllo3+xiejV+6/GdgvPHlE3H8GR1dLYRG2zym7BnyGeFexH/CKv0xHMORwk9TjkV4Ky9wUIIy2nn/D32Z8zUzeWCoo/xNeenMdrZHwerEuCyWRz5sIymtyavJqMsEkfIzXWPRCKOgg1xp1V0Y6t8LBNaBwAqdE4oQkZaWTJBt6lW0uoPdmYzrJwRdqjzlPg5kSH9L9556+Q5JCTzrOg1HBOZR0oj+DOdJw9iJ5k3Vo3pyGCod24tSfPuQ8A9599ZMV7+n1GGdJtVsj27i5+FOMBHLXOJwcxn0BMMw5/GkiCvGLbNAlMNm9ZCW3oYPZL2p1JR3EJvVTXmtWSV44HSJiqzcg0pza9LIzO0fbmWL4HOhSDFJQwJgtR7SlMaUjv0a1HDBS2FI+xJxFCb0pKzBmwQSs9gSV5XrfV2Pfj4sfz9eyHklCCvPldmX0xuK94+hB5xeXZBJdWhdRJxINFiwBqlRZAxpmfpUfXECN2O00+n8bEX1FMpCzKU=
+  email:
+    recipients:
+      secure: fuYmxYrKSwnNMW/QfXKbvsncS8orez4Vf9n5ZnryqCP5dWKzVYqPrvmXxE0mXM9lJKszmHzvHK2IdoKacDEAalp+sWtNR03LBmq5h40+bYF/G7maM+8KkzWF1/y7dmMcdlGJi9xwLYVgFCNvSVJvbpaD0g6HGjNhHaAYMpZ19YPK5xf9pfcTNoFuF6PE+jqCCJQl1DIr1zKNKcysoErNtHGAg0pvSSxU1SQdR9XvINVlbfP/oiZTQ0wrhJ2ehmVJuBNDxhb/UOa1ZruTbpLGw/5jiBDGzOIJU/3CzQjl8/023C8gFPGKie4cV94bpX/AMofV+r5/94z2YwMMto0He9UtJerWMN4v8ufOCljpQX0uJsrCcGtd4gnW4f5mBWqNhEtBCMM6+8nn1JFUmuNw6sAYrsTVHqSVj6Xgr8HZUBExBJOkudzldcmbx7enVx5W2tgI7Fr3+qa3b8FdOnZCpgeoJbobkTZGmBkCYvrryrYnLMO+ONEZHtKMHm58xcZEYh4NRPkP0liln3jcnq+pzIqfTueozQjC/Pw9dHoSTCkWcHkr/zqN+LDfT8zAUXFomIUZb3uXXs4ja3MOAea0waPpxCQs8Hu7mHi2mRHvrJPG79+j6iMcBHGPbKwkcIWLttqBQoMuwJx3jjjKzmplWOxdSGxP26nYDE7zMVanqyQ=
